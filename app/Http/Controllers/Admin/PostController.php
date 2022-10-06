@@ -74,7 +74,9 @@ class PostController extends Controller
             $linkImg = Storage::put('post_imgs', $data['image'] );
             $post->image = $linkImg;
         };
+
         $post->save();
+
         if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']); // tag in arrivo da create
 
         return redirect()->route('admin.posts.show', $post)->with('message', 'Post created succesfully.');
@@ -116,13 +118,12 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
-            'title' => 'required|string|min:5|max:50|unique:posts',
+            'title' => 'required|string|min:5|max:50',
             'content' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable',
             'category_id' => 'required|exists:categories,id',
         ], [
             'title.required' => 'The title is required',
-            'title.unique' => '$request->title already exsist',
             'title.min' => 'The title must be at least 5 characters long',
             'title.max' => 'The title can\'t be longer than 50 characters',
             'title.required' => 'the title is required',
@@ -131,16 +132,19 @@ class PostController extends Controller
             'image.image' => 'the uploaded file is not an image',
             'category_id.exists' => 'Select a valid category'
         ]);
+
         $data = $request->all();
         $data['slug'] = Str::slug($request->title, '-');
         $post->update($data); // fill and save
         $category_id = $data['category_id'];
         $post->category_id = $category_id;
+
         if (array_key_exists('tags', $data)) {
             $post->tags()->sync($data['tags']);
         } else {
             $post->tags()->detach();
         }
+
         if (array_key_exists('image', $data)) {
             if ($post->image) Storage::delete($post->image);
             $linkImg = Storage::put('post_imgs', $data['image'] );
@@ -160,7 +164,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         if ($post->image) Storage::delete($post->image);
+
         $post->delete();
+
         return redirect()->route('admin.posts.index')->with('message', 'The post has been deleted');
     }
 }
