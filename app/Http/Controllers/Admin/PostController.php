@@ -127,7 +127,8 @@ class PostController extends Controller
             'title.max' => 'The title can\'t be longer than 50 characters',
             'title.required' => 'the title is required',
             'content.required' => 'Content is required',
-            'image' => 'Invalid url',
+            'image.mimes' => 'the file has to be in jpg, png or jpeg',
+            'image.image' => 'the uploaded file is not an image',
             'category_id.exists' => 'Select a valid category'
         ]);
         $data = $request->all();
@@ -140,6 +141,11 @@ class PostController extends Controller
         } else {
             $post->tags()->detach();
         }
+        if (array_key_exists('image', $data)) {
+            if ($post->image) Storage::delete($post->image);
+            $linkImg = Storage::put('post_imgs', $data['image'] );
+            $post->image = $linkImg;
+        };
         $post->update($data);
 
         return redirect()->route('admin.posts.show', $post)->with('message', 'The post has been updated');
@@ -153,6 +159,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if ($post->image) Storage::delete($post->image);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('message', 'The post has been deleted');
     }
