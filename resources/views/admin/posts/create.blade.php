@@ -20,7 +20,7 @@
 
     <hr>
     <div class="d-flex align-content-center">
-            <form action=" {{ route('admin.posts.store') }} " method="POST" class="row" >
+            <form action=" {{ route('admin.posts.store') }} " method="POST" class="row" enctype="multipart/form-data" >
 
                 @csrf
                 <div class="form-group col-12">
@@ -49,13 +49,14 @@
                     <small id="title" class="form-text text-muted">You must write any content</small>
                 </div>
                 <div class="form-group col-10">
-                    <label for="image">Image</label>
-                    <input type="url" class="form-control" id="image" name="image" value=" {{ old('image',  $post->image) }} ">
+                    <label for="image">Image</label><br>
+                    <input type="file" class="" id="image" name="image">
                     <small id="image" class="form-text text-muted">Copy the image's url here.</small>
                 </div>
                 <div class="form-group col-2">
                     <img src="{{ $post->image ?? 'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png'}}" alt="preview of image" id="preview" class="img-fluid">
                 </div>
+               
                 
                     {{-- checkbox --}}
                 @if(count($tags))
