@@ -11,14 +11,16 @@ class PostPublicationMAil extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $post;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -27,7 +29,9 @@ class PostPublicationMAil extends Mailable
      * @return $this
      */
     public function build()
+
     {
-        return $this->view('mail.posts.publication');
+        $post = $this->post;
+        return $this->view('mails.posts.publication', compact('post'));
     }
 }
