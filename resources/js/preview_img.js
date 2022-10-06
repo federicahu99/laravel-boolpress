@@ -6,6 +6,12 @@ const placeholder='https://storage.googleapis.com/proudcity/mebanenc/uploads/202
 imgUrl.addEventListener('input', () => {
     // if(imgUrl.value) imgPrev.src= imgUrl.value;
     // else imgPrev.src= placeholder;
+    if(imgUrl.files && imgUrl.files[0]) {
+        let reader = new FileReader();
 
-    imgPrev.src = imgUrl.value || placeholder;
+        reader.readAsDataURL(imgUrl.files[0]);
+        reader.onload = event => {
+            imgPrev.src = event.target.result;
+        }//leggi il file ed eseguisci
+    } else imgPrev.src = placeholder;
 })

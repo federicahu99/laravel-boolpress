@@ -54,7 +54,7 @@
                     <small id="image" class="form-text text-muted">Copy the image's url here.</small>
                 </div>
                 <div class="form-group col-2">
-                    <img src="{{ $post->image ?? 'https://storage.googleapis.com/proudcity/mebanenc/uploads/2021/03/placeholder-image-300x225.png'}}" alt="preview of image" id="preview" class="img-fluid">
+                    <img src="{{ $post->image }}" alt="preview of image" id="preview" class="img-fluid">
                 </div>
                
                 

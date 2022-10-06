@@ -37364,7 +37364,15 @@ var placeholder = 'https://storage.googleapis.com/proudcity/mebanenc/uploads/202
 imgUrl.addEventListener('input', function () {
   // if(imgUrl.value) imgPrev.src= imgUrl.value;
   // else imgPrev.src= placeholder;
-  imgPrev.src = imgUrl.value || placeholder;
+  if (imgUrl.files && imgUrl.files[0]) {
+    var reader = new FileReader();
+    reader.readAsDataURL(imgUrl.files[0]);
+
+    reader.onload = function (event) {
+      imgPrev.src = event.target.result;
+    }; //leggi il file ed eseguisci
+
+  } else imgPrev.src = placeholder;
 });
 
 /***/ }),
