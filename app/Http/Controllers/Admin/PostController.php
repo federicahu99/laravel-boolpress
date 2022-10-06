@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Mail\PostPublicationMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -78,6 +80,11 @@ class PostController extends Controller
         $post->save();
 
         if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']); // tag in arrivo da create
+
+        // mail of confirmation of publication
+        $mail= new PostPublicationMail();
+        $user_mail = Auth::user()->email;
+        Mail::to($user_mail)->send($mail); 
 
         return redirect()->route('admin.posts.show', $post)->with('message', 'Post created succesfully.');
     }
