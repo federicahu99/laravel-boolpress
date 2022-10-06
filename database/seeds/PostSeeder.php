@@ -29,7 +29,7 @@ class PostSeeder extends Seeder
             $new_post->category_id = Arr::random($categories_ids);
             $new_post->slug = Str::slug($new_post->title, '-');
             $new_post->content = $faker->paragraphs(2, true);
-            $new_post->image = $faker->imageUrl(200, 200);
+            // $new_post->image = $faker->imageUrl(200, 200);
 
             $new_post->save();
 
