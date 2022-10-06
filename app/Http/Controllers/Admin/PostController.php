@@ -48,7 +48,7 @@ class PostController extends Controller
          $request->validate([
              'title' =>'required|string|min:5|max:50|unique:posts',
              'content' =>'required|string',
-             'image' =>'nullable|url',
+             'image' =>'nullable',
              'category_id' =>'required|exists:categories,id', // !!!!
          ],[
              'title.required' => 'The title is required',
@@ -57,7 +57,8 @@ class PostController extends Controller
              'title.max' => 'The title can\'t be longer than 50 characters',
              'title.required' => 'the title is required',
              'content.required' => 'Content is required',
-             'image' => 'Invalid url',
+             'image.mimes' => 'the file has to be in jpg, png or jpeg',
+             'image.image' => 'the uploaded file is not an image',
              'category_id.exists'=> 'Select a valid category'
          ]);
 
