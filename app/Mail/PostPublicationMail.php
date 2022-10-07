@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PostPublicationMAil extends Mailable
+class PostPublicationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,6 +32,6 @@ class PostPublicationMAil extends Mailable
 
     {
         $post = $this->post;
-        return $this->view('mails.posts.publication', compact('post'));
+        return $this->view('mail.posts.publication', compact('post'));
     }
 }

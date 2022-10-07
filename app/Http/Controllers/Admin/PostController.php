@@ -82,7 +82,7 @@ class PostController extends Controller
         if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']); // tag in arrivo da create
 
         // mail of confirmation of publication
-        $mail= new PostPublicationMail();
+        $mail= new PostPublicationMail($post);
         $user_mail = Auth::user()->email;
         Mail::to($user_mail)->send($mail); 
 
