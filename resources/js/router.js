@@ -15,7 +15,7 @@ const routes = new VueRouter({
     routes: [
         {path: '/', component: TheHomePage, name:'home' },
         {path: '/about', component: TheAbout, name:'about' },
-        {path: '/posts/:id', component: ThePostDetail, name:'post-detail' },
+        {path: '/posts/:slug', component: ThePostDetail, name:'post-detail' },
         {path: '*', component: NotFound}, //always the last one
     ]
 });

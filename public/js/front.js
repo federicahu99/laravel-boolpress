@@ -2024,7 +2024,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchPost: function fetchPost() {
       var _this = this;
 
-      axios.get("http://127.0.0.1:8000/api/posts/" + this.$route.params.id).then(function (res) {
+      axios.get("http://127.0.0.1:8000/api/posts/" + this.$route.params.slug).then(function (res) {
         _this.post = res.data;
       })["catch"](function (err) {
         console.error(err);
@@ -2403,7 +2403,12 @@ var render = function render() {
   }, [_c("h6", [_vm._v(" Created at: " + _vm._s(_vm.publishedAt))]), _vm._v(" "), _c("h6", [_vm._v(" Created by: " + _vm._s(_vm.post.user_id) + " (Id of user)")]), _vm._v(" "), _c("router-link", {
     staticClass: "btn btn-primary",
     attrs: {
-      to: "/posts/".concat(_vm.post.id)
+      to: {
+        name: "post-detail",
+        params: {
+          slug: _vm.post.slug
+        }
+      }
     }
   }, [_vm._v("View")])], 1)])])])]);
 };
@@ -54581,7 +54586,7 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _js_components_pages_TheAbout_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     name: 'about'
   }, {
-    path: '/posts/:id',
+    path: '/posts/:slug',
     component: _js_components_pages_ThePostDetail_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     name: 'post-detail'
   }, {
